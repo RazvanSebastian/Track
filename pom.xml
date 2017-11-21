@@ -6,7 +6,7 @@
 	<groupId>edu.utcluj.track</groupId>
 	<artifactId>track</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>track</name>
 	<description>Demo project for tracking application server Spring Boot</description>
@@ -33,11 +33,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.3-1100-jdbc41</version>
+			<version>9.4.1212</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

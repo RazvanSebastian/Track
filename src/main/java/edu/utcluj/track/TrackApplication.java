@@ -1,32 +1,38 @@
 package edu.utcluj.track;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import edu.utcluj.track.position.LocalDateTimeConverter;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
-
 @SpringBootApplication
 @EnableSwagger2
-public class TrackApplication extends WebMvcConfigurerAdapter {
+public class TrackApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TrackApplication.class, args);
 	}
+	
+	  @Override
+	  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+	      return builder.sources(TrackApplication.class);
+	  }
 
 	@Bean
 	public DataSource dataSource() throws IOException {
@@ -36,10 +42,7 @@ public class TrackApplication extends WebMvcConfigurerAdapter {
 		return new HikariDataSource(new HikariConfig(hikariProps));
 	}
 
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd HH:mm:ss"));
-	}
+
 
 	// for swagger: http://localhost:8085/swagger-ui.html
 	@Bean
