@@ -34,7 +34,7 @@ public class Device implements Serializable {
 	@NotNull
 	private Date registrationDate;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Position> positions;
 
 	public Device() {

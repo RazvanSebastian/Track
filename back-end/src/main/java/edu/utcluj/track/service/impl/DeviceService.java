@@ -73,8 +73,8 @@ public class DeviceService implements IDeviceService{
 	}
 
 	@Override
-	public Device find(String token) throws DeviceNotFoundException {
-		final Device device = deviceRepository.find(token);
+	public Device find(NewDevice newDevice) throws DeviceNotFoundException {
+		final Device device = deviceRepository.find(generateDeviceToken(newDevice));
 		if(device == null)
 			throw new DeviceNotFoundException();
 		return device;

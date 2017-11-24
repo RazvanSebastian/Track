@@ -24,7 +24,7 @@ public interface IDeviceService {
 	 */
 	public String create(NewDevice newDevice) throws DeviceAlreadyRegisteredException, UserNotFoundException, NoMatchingException;
 	
-	public Device find(String token) throws DeviceNotFoundException;
+	public Device find(NewDevice newDevice) throws DeviceNotFoundException;
 
 	public List<Device> findAll(String username) throws UserNotFoundException;
 }

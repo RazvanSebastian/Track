@@ -34,12 +34,12 @@ public class DeviceController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	@GetMapping
+		
+	@PostMapping("/authentication")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> find(@RequestHeader(name = "token") String token) {
+	public ResponseEntity<?> find(@RequestBody NewDevice device) {
 		try {
-			return new ResponseEntity<>(deviceService.find(token), HttpStatus.OK);
+			return new ResponseEntity<>(deviceService.find(device), HttpStatus.OK);
 		} catch (DeviceNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

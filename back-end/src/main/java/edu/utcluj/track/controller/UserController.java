@@ -33,7 +33,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("admin-create")
+	@PostMapping("admin-register")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> createAdmin(@RequestBody User user) {
 		try {
