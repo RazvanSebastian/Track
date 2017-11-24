@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers.DateDeserializer;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -21,8 +23,7 @@ public class Position {
 	private Long id;
 
 	@Column(name = "creation_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	@ApiModelProperty(hidden = true)
-	@JsonIgnore
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Date createTime;
 
 	@NotNull

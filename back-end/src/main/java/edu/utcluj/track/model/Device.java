@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "android_device", uniqueConstraints = @UniqueConstraint(columnNames = {"token"}))
+@Table(name = "android_device", uniqueConstraints = @UniqueConstraint(columnNames = { "token" }))
 public class Device implements Serializable {
 
 	/**
@@ -32,7 +34,7 @@ public class Device implements Serializable {
 	@NotNull
 	private Date registrationDate;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Position> positions;
 
 	public Device() {

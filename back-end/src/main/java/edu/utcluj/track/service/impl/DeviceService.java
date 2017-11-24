@@ -1,18 +1,13 @@
 package edu.utcluj.track.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import com.google.common.collect.Lists;
 
 import edu.utcluj.track.dao.NewDevice;
 import edu.utcluj.track.exception.DeviceAlreadyRegisteredException;
@@ -52,14 +47,6 @@ public class DeviceService implements IDeviceService{
 		return t;
 	}
 	
-	/**
-	 * If the user is not registered he will be automatically registered;
-	 * else he will only register a new device
-	 * 
-	 * @return String representing the unique token of the device
-	 * @throws UserNotFoundException 
-	 * @throws NoMatchingException 
-	 */
 	@Override
 	public String create(NewDevice newDevice) throws DeviceAlreadyRegisteredException, UserNotFoundException, NoMatchingException {
 		//check if the user is registered

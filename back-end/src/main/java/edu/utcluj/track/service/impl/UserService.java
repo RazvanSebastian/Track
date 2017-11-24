@@ -23,25 +23,18 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IRoleRepository roleRepository;
-	
-	/**
-	 * Create new user
-	 * @param  user 
-	 * @param role
-	 * @return user created with set id
-	 * @throws UserAlreadyExistException
-	 */
+
 	@Override
-	public User create(User user,UserRole role) throws UserAlreadyExistException {
+	public User create(User user, UserRole role) throws UserAlreadyExistException {
 		if (userRepository.find(user.getEmail()) != null)
 			throw new UserAlreadyExistException(user.getEmail());
-		//encrypt password
+		// encrypt password
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		//set up user details
+		// set up user details
 		user.setAccountNonLocked(true);
 		user = userRepository.save(user);
-		//add role to user
+		// add role to user
 		Set<Role> roles = new HashSet<>();
 		switch (role) {
 		case USER:
@@ -54,9 +47,9 @@ public class UserService implements IUserService {
 			roles.add(roleRepository.findRole("ROLE_USER"));
 			break;
 		}
-		//set up roles
+		// set up roles
 		user.setRoles(roles);
-		//store
+		// store
 		return userRepository.save(user);
 	}
 

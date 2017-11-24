@@ -16,7 +16,7 @@ import edu.utcluj.track.model.UserRole;
 import edu.utcluj.track.service.IUserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class UserController {
 
 	@Autowired

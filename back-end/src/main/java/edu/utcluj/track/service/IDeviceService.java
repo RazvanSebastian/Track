@@ -13,7 +13,15 @@ import edu.utcluj.track.model.Device;
 
 @Service
 public interface IDeviceService {
-
+	
+	/**
+	 * If the user is registered the device will be register in android client
+	 * 
+	 * @return String representing the unique token of the device
+	 * @throws UserNotFoundException 
+	 * @throws NoMatchingException
+	 * @throws DeviceAlreadyRegisteredException 
+	 */
 	public String create(NewDevice newDevice) throws DeviceAlreadyRegisteredException, UserNotFoundException, NoMatchingException;
 	
 	public Device find(String token) throws DeviceNotFoundException;

@@ -9,6 +9,14 @@ import edu.utcluj.track.model.UserRole;
 @Service
 public interface IUserService {
 
-	public User create(User user,UserRole role) throws UserAlreadyExistException;
+	/**
+	 * Create new user
+	 * 
+	 * @param user
+	 * @param role
+	 * @return user created with set id
+	 * @throws UserAlreadyExistException
+	 */
+	public User create(User user, UserRole role) throws UserAlreadyExistException;
 
 }
