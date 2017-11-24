@@ -48,6 +48,8 @@ public class TrackApplication extends SpringBootServletInitializer {
 	@Bean
 	public Docket apiTest() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("edu.utcluj.track")).paths(PathSelectors.any()).build();
+				.apis(RequestHandlerSelectors.basePackage("edu.utcluj.track"))
+				.paths(PathSelectors.any())
+				.build();
 	}
 }

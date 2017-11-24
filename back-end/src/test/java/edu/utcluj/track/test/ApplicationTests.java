@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.utcluj.track.position.Position;
-import edu.utcluj.track.position.PositionRepository;
-import edu.utcluj.track.position.PositionService;
+import edu.utcluj.track.position.model.Position;
+import edu.utcluj.track.position.repository.PositionRepository;
+import edu.utcluj.track.position.service.impl.PositionService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
