@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.utcluj.track.dao.NewDevice;
+import edu.utcluj.track.dao.DeviceDao;
 import edu.utcluj.track.exception.DeviceAlreadyRegisteredException;
 import edu.utcluj.track.exception.DeviceNotFoundException;
 import edu.utcluj.track.exception.NoMatchingException;
@@ -25,26 +25,38 @@ public class DeviceController {
 	@Autowired
 	private IDeviceService deviceService;
 
+	//
+	// Android client
+	//
 	@PostMapping
 	@PreAuthorize("permitAll()")
-	public ResponseEntity<?> create(@RequestBody NewDevice newDevice) {
+	public ResponseEntity<?> create(@RequestBody DeviceDao deviceDao) {
 		try {
-			return new ResponseEntity<>(this.deviceService.create(newDevice), HttpStatus.CREATED);
+			this.deviceService.create(deviceDao);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (DeviceAlreadyRegisteredException | UserNotFoundException | NoMatchingException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-		
+
 	@PostMapping("/authentication")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> find(@RequestBody NewDevice device) {
+	public ResponseEntity<?> find(@RequestBody DeviceDao deviceDao) {
 		try {
-			return new ResponseEntity<>(deviceService.find(device), HttpStatus.OK);
-		} catch (DeviceNotFoundException e) {
+			return new ResponseEntity<>(deviceService.find(deviceDao).getToken(), HttpStatus.OK);
+		} catch (DeviceNotFoundException | NoMatchingException | UserNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
+	@GetMapping
+	public ResponseEntity<?> checkToken(@RequestHeader("token") String token) {
+		return deviceService.find(token) ? new ResponseEntity<>(HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
+
+	//
+	// Browser client
+	//
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> findAll(@RequestHeader(name = "username") String username) {

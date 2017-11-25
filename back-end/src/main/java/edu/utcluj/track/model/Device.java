@@ -30,7 +30,7 @@ public class Device implements Serializable {
 
 	@NotNull
 	private String token;
-
+	
 	@NotNull
 	private Date registrationDate;
 

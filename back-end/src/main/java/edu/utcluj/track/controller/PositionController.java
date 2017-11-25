@@ -25,9 +25,11 @@ public class PositionController {
 
 	@Autowired
 	private IPositionService positionService;
-
+	
+	//
+	//Android client
+	//
 	@PostMapping
-	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> save(@RequestHeader(name = "token") String token, @RequestBody Position newPosition) {
 		try {
 			positionService.save(newPosition, token);
@@ -37,6 +39,10 @@ public class PositionController {
 		}
 	}
 
+	
+	//
+	//Browser client
+	//
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> findAll(@RequestHeader(name = "token") String token,
