@@ -8,9 +8,13 @@ import javax.sql.DataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -41,8 +45,7 @@ public class TrackApplication extends SpringBootServletInitializer {
 		hikariProps.put("dataSourceProperties", dsProps);
 		return new HikariDataSource(new HikariConfig(hikariProps));
 	}
-
-
+	
 
 	// for swagger: http://localhost:8085/swagger-ui.html
 	@Bean
