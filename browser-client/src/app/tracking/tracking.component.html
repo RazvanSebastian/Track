@@ -1,3 +1,9 @@
 <p>
   tracking works!
 </p>
+
+{{deviceList | json}}
+
+<ul>
+	<li *ngFor="let device of deviceList"> {{device.token}} registered at {{device.registrationDate | date}}</li>
+</ul>

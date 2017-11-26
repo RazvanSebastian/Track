@@ -4,12 +4,10 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { TrackingComponent } from './tracking/tracking.component';
 
 @NgModule({
 	declarations: [
-	AppComponent,
-	TrackingComponent,
+	AppComponent
 	],
 	imports: [
 	BrowserModule,
@@ -17,7 +15,8 @@ import { TrackingComponent } from './tracking/tracking.component';
 	RouterModule.forRoot([
 		{ path: '', redirectTo: '', pathMatch: 'full' },
 		{ path:'login', loadChildren:'app/account/account.module#AccountModule'},
-		{ path:'register', loadChildren:'app/account/account.module#AccountModule'}
+		{ path:'register', loadChildren:'app/account/account.module#AccountModule'},
+		{ path:'tracking-list', loadChildren:'app/tracking/tracking.module#TrackingModule'}
 		])
 	],
 	providers: [],
