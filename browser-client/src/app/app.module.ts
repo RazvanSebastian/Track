@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+
+
 @NgModule({
 	declarations: [
 	AppComponent
@@ -12,11 +14,12 @@ import { AppComponent } from './app.component';
 	imports: [
 	BrowserModule,
 	HttpModule,
+	
 	RouterModule.forRoot([
 		{ path: '', redirectTo: '', pathMatch: 'full' },
 		{ path:'login', loadChildren:'app/account/account.module#AccountModule'},
 		{ path:'register', loadChildren:'app/account/account.module#AccountModule'},
-		{ path:'tracking-list', loadChildren:'app/tracking/tracking.module#TrackingModule'}
+		{ path:'device-list', loadChildren:'app/tracking/tracking.module#TrackingModule'}
 		])
 	],
 	providers: [],

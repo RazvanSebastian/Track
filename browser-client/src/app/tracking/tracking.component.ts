@@ -30,4 +30,8 @@ export class TrackingComponent implements OnInit {
 		} 
 	}
 
+	viewPositionsDevice(device){
+		this._router.navigate(['/device-list/device/'+device.name+'/token/'+device.token]);
+	}
+
 }
