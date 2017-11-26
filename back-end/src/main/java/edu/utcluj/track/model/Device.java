@@ -30,7 +30,10 @@ public class Device implements Serializable {
 
 	@NotNull
 	private String token;
-	
+
+	@NotNull
+	private String name;
+
 	@NotNull
 	private Date registrationDate;
 
@@ -41,9 +44,10 @@ public class Device implements Serializable {
 		super();
 	}
 
-	public Device(String token, Date registrationDate) {
+	public Device(String token, String name, Date registrationDate) {
 		super();
 		this.token = token;
+		this.name = name;
 		this.registrationDate = registrationDate;
 	}
 
@@ -77,6 +81,14 @@ public class Device implements Serializable {
 
 	public void setPositions(List<Position> positions) {
 		this.positions = positions;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

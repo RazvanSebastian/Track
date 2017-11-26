@@ -1,5 +1,7 @@
 package edu.utcluj.track.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +46,9 @@ public class PositionService implements IPositionService {
 		if (deviceRepository.find(token) == null)
 			throw new DeviceNotFoundException();
 
-		return deviceRepository.findAllDevicePosition(token, startDate, endDate).getPositions();
+		final Device device = deviceRepository.findAllDevicePosition(token, startDate, endDate);
+		if(device == null)
+			return new ArrayList<>();
+		return device.getPositions();
 	}
 }

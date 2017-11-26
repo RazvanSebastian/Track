@@ -3,17 +3,19 @@ package edu.utcluj.track.dao;
 public class DeviceDao {
 	private String email;
 	private String password;
+	private String name;
 	private String token;
 
 	public DeviceDao() {
 		super();
 	}
 
-	public DeviceDao(String email, String password, String deviceId) {
+	public DeviceDao(String email, String password, String deviceId, String name) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.token = deviceId;
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -38,6 +40,14 @@ public class DeviceDao {
 
 	public void setDeviceToken(String deviceId) {
 		this.token = deviceId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

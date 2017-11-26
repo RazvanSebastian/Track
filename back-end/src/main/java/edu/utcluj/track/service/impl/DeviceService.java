@@ -3,10 +3,8 @@ package edu.utcluj.track.service.impl;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,9 +16,11 @@ import edu.utcluj.track.exception.NoMatchingException;
 import edu.utcluj.track.exception.UserNotFoundException;
 import edu.utcluj.track.model.Device;
 import edu.utcluj.track.model.User;
+import edu.utcluj.track.pojo.DevicePojo;
 import edu.utcluj.track.repository.IDeviceRepository;
 import edu.utcluj.track.repository.IUserRepository;
 import edu.utcluj.track.service.IDeviceService;
+import springfox.documentation.swagger2.mappers.ModelMapper;
 
 @Component
 public class DeviceService implements IDeviceService {
@@ -30,6 +30,9 @@ public class DeviceService implements IDeviceService {
 
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public void create(DeviceDao deviceDao)
@@ -49,7 +52,7 @@ public class DeviceService implements IDeviceService {
 
 		// We have registered the device
 		final Device device = deviceRepository
-				.save(new Device(deviceDao.getDeviceToken(), new Date(System.currentTimeMillis())));
+				.save(new Device(deviceDao.getDeviceToken(),deviceDao.getName(), new Date(System.currentTimeMillis())));
 		// Assigned the device to user and update
 		user.getDevices().add(device);
 		userRepository.save(user);
@@ -79,11 +82,16 @@ public class DeviceService implements IDeviceService {
 	}
 
 	@Override
-	public List<Device> findAll(String username) throws UserNotFoundException {
+	public List<DevicePojo> findAll(String username) throws UserNotFoundException {
 		final User user = userRepository.find(username);
 		if (user == null)
 			throw new UserNotFoundException();
-		return user.getDevices().stream().collect(Collectors.toList());
+		return user.getDevices()
+				.stream()
+				.collect(Collectors.toList()) //get list of devices
+				.stream()
+				.map(p -> new DevicePojo(p.getToken(),p.getName(),p.getRegistrationDate()))
+				.collect(Collectors.toList());//get only the device without position
 	}
 
 	@Override

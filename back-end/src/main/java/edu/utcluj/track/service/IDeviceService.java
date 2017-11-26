@@ -10,6 +10,7 @@ import edu.utcluj.track.exception.DeviceNotFoundException;
 import edu.utcluj.track.exception.NoMatchingException;
 import edu.utcluj.track.exception.UserNotFoundException;
 import edu.utcluj.track.model.Device;
+import edu.utcluj.track.pojo.DevicePojo;
 
 @Service
 public interface IDeviceService {
@@ -53,7 +54,7 @@ public interface IDeviceService {
 	 * 
 	 * @throws UserNotFoundException
 	 */
-	public List<Device> findAll(String username) throws UserNotFoundException;
+	public List<DevicePojo> findAll(String username) throws UserNotFoundException;
 	
 	/**
 	 * @param token
