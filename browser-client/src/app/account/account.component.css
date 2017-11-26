@@ -1,0 +1,21 @@
+form{
+	margin: auto;
+	width: 550px;
+	border: solid;
+	border-radius: 10px;
+	border-color: darkgrey;
+	margin-top: 8%;
+	height: auto;
+	padding-top: 2%;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+p{
+  color: red;
+  position: static;
+  margin-left: 12px;
+}
+h3{
+	margin: auto;
+}
