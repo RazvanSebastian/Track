@@ -1,0 +1,21 @@
+<div id="container">
+	<div style="text-align: center;">
+		<h3>Positions for device {{deviceName}} between two dates</h3> 
+	</div>
+	<div class="row">
+		<div class="col-sm-5"> 
+			<label> Start date: <input [(ngModel)]="startdate" name="startdate" type="date"></label>
+		</div>
+		<div class="col-sm-5"> 
+			<label> End date: <input [(ngModel)]="enddate" name="enddate" type="date"></label>
+		</div>
+		<div class="col-sm-2" style="padding-top: 17px;">
+		<button [disabled]="startdate == undefined || enddate == undefined" type="submit" class="btn btn-primary" (click)="onCheckPositions()">Check</button> 
+	</div>
+</div>
+<agm-map [latitude]="lat" [longitude]="lng">
+
+	<agm-marker *ngFor="let item of positions" [latitude]="item.latitude" [longitude]="item.longitude"></agm-marker>
+
+</agm-map>
+</div>

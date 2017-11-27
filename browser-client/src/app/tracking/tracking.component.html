@@ -1,0 +1,21 @@
+<div>
+	<div id="header">
+		<h3>Your device list registered on your account</h3>		
+	</div>
+
+	<div id="table">
+		<table>
+			<tr>
+				<th>Device name</th>
+				<th>Device token</th>
+				<th>Registration date</th>
+			</tr>
+			<tr style="cursor: pointer" *ngFor="let device of deviceList" (click)="viewPositionsDevice(device)">
+				<td>{{device.name}}</td>
+				<td>{{device.token}}</td>
+				<td>{{device.registrationDate | date : "M/d/yy, h:mm a"}}</td>
+			</tr>
+
+		</table>
+	</div>
+</div>

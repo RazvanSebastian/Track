@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<div class="form-group row">
+		<h3>{{action}}</h3>	
+	</div>
+	<div class="form-group row">
+		<label for="email" class="col-sm-2 col-form-label">Email</label>
+		<div class="col-sm-10">
+			<input  [(ngModel)]="email" type="email" name="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+		</div>
+		<div *ngIf="form.controls['email'].hasError('pattern') && (form.controls['email'].touched || form.controls['email'].dirty)">
+			<p>Invalid email format!</p>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="password" class="col-sm-2 col-form-label">Password</label>
+		<div class="col-sm-10">
+			<input  [(ngModel)]="password" type="password" name ="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+		</div>
+		<div *ngIf="form.controls['password'].hasError('minlength') && (form.controls['password'].touched || form.controls['password'].dirty)">
+			<p style="text-colo: red">Password must be at least 6 characters!</p>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-3">
+			<button [disabled]="form.invalid" type="submit" class="btn btn-primary">{{action}}</button>
+		</div>
+		<div class="col-sm-9" *ngIf="isSuccess == false">
+			<p>{{message}}</p>
+		</div>
+	</div>
+</form>
