@@ -1,19 +1,21 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <a class="navbar-brand" href="#">Home</a>
+<nav style="background: #DDDDDD" class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <a class="navbar-brand" [routerLink]="['']">Home</a>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li *ngIf = "!isStorageClear()" class="nav-item">
         <a class="nav-link" class="nav-link" [routerLink]="['/device-list']">My devices</a>
       </li>
     </ul>
   </div>
 
-  <div class="row">
-    <div class="col-sm-4"> <a class="nav-link" [routerLink]="['/login']" >Login</a></div>
+  <div *ngIf = "isStorageClear()" class="row">
+    <div  class="col-sm-4"> <a class="nav-link" [routerLink]="['/login']" >Login</a></div>
     <div class="col-sm-4"><a class="nav-link" [routerLink]="['/register']" >Register</a></div>
   </div>
+   <div class="row">
+     <div class="col-sm-4" (click)="clearLocalStorage()" *ngIf="!isStorageClear()"> <a class="nav-link" [routerLink]="['/login']" >Sign Out</a></div>
+  </div> 
 </nav>
-
 
 
 <router-outlet></router-outlet>
