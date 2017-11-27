@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -43,11 +44,6 @@ public class MainActivity extends Activity {
     Button loginButton;
     Button registerButton;
 
-    private Gson gson;
-
-    private  String deviceToken;
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -65,13 +61,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deviceToken = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-
         emailInput = findViewById(R.id.emailLoginInput);
         passwordInput = findViewById(R.id.passwordLoginInput);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
-        gson = new Gson();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public  void onClick (View v) {
@@ -111,7 +104,8 @@ public class MainActivity extends Activity {
         JSONObject jsonParams = new JSONObject();
         jsonParams.put("email", emailInput.getText());
         jsonParams.put("password", passwordInput.getText());
-        jsonParams.put("deviceToken",deviceToken);
+        jsonParams.put("deviceToken",Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+
         StringEntity entity = new StringEntity(jsonParams.toString());
 
         client.post(getApplicationContext(),url, entity, "application/json", new AsyncHttpResponseHandler() {
@@ -152,7 +146,9 @@ public class MainActivity extends Activity {
         JSONObject jsonParams = new JSONObject();
         jsonParams.put("email", emailInput.getText());
         jsonParams.put("password", passwordInput.getText());
-        jsonParams.put("deviceToken",deviceToken);
+        jsonParams.put("deviceToken",Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+        jsonParams.put("name", Build.MANUFACTURER + " - " + Build.MODEL);
+        
         StringEntity entity = new StringEntity(jsonParams.toString());
 
         client.post(getApplicationContext(),url, entity, "application/json", new AsyncHttpResponseHandler() {
