@@ -22,7 +22,8 @@ export class AppComponent {
 	clearLocalStorage(){
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
-		localStorage.removeItem("username");	
+		localStorage.removeItem("username");
 	}
+
 
 }

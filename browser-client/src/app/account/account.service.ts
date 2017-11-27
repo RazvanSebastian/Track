@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,  } from '@angular/core';
 import { Http, RequestOptions, Headers, URLSearchParams } from '@angular/http';
 import { HostURI } from '../shared/common';
 import { Observable } from 'rxjs/Observable';
@@ -19,6 +19,7 @@ export class User{
 export class AccountService {
 
 	private hostURI = new HostURI(); 
+	private isLoggedIn : boolean = false;
 
 	constructor(
 		private _http : Http) 
