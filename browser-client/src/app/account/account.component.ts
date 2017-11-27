@@ -34,7 +34,6 @@ export class AccountComponent implements OnInit {
 			email : ["",[Validators.required,Validators.pattern("^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$")]],
 			password : ["",[Validators.required,Validators.minLength(6)]]
 		});
-		//this.form.controls.password.errors.minlength;
 	}
 
 	onSubmit(){
@@ -55,6 +54,7 @@ export class AccountComponent implements OnInit {
 				localStorage.setItem('access_token',authResponse.access_token);
 				localStorage.setItem('refresh_token',authResponse.refresh_token);
 				this.isSuccess = true;
+				this._router.navigate(["device-list"]);
 			},
 			err => {
 				this.isSuccess=false;
