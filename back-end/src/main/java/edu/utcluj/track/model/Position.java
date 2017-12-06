@@ -36,6 +36,13 @@ public class Position {
 		super();
 	}
 
+	public Position(Date createTime, String latitude, String longitude) {
+		super();
+		this.createTime = createTime;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
 	public Long getId() {
 		return id;
 	}

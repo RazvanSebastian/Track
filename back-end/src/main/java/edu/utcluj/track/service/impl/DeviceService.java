@@ -8,8 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import edu.utcluj.track.dao.DeviceDao;
+import edu.utcluj.track.dto.DeviceDto;
 import edu.utcluj.track.exception.DeviceAlreadyRegisteredException;
 import edu.utcluj.track.exception.DeviceNotFoundException;
 import edu.utcluj.track.exception.NoMatchingException;
@@ -22,6 +23,7 @@ import edu.utcluj.track.repository.IUserRepository;
 import edu.utcluj.track.service.IDeviceService;
 import springfox.documentation.swagger2.mappers.ModelMapper;
 
+@Transactional
 @Component
 public class DeviceService implements IDeviceService {
 
@@ -30,12 +32,9 @@ public class DeviceService implements IDeviceService {
 
 	@Autowired
 	private IUserRepository userRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
 
 	@Override
-	public void create(DeviceDao deviceDao)
+	public void create(DeviceDto deviceDao)
 			throws DeviceAlreadyRegisteredException, UserNotFoundException, NoMatchingException {
 		// check if the user is registered
 		User user = userRepository.find(deviceDao.getEmail());
@@ -59,7 +58,7 @@ public class DeviceService implements IDeviceService {
 	}
 
 	@Override
-	public Device find(DeviceDao newDevice) throws DeviceNotFoundException, NoMatchingException, UserNotFoundException {
+	public Device find(DeviceDto newDevice) throws DeviceNotFoundException, NoMatchingException, UserNotFoundException {
 		final User user = userRepository.find(newDevice.getEmail());
 		if (user == null)
 			throw new UserNotFoundException();

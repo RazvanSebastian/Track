@@ -1,16 +1,16 @@
-package edu.utcluj.track.dao;
+package edu.utcluj.track.dto;
 
-public class DeviceDao {
+public class DeviceDto {
 	private String email;
 	private String password;
 	private String name;
 	private String token;
 
-	public DeviceDao() {
+	public DeviceDto() {
 		super();
 	}
 
-	public DeviceDao(String email, String password, String deviceId, String name) {
+	public DeviceDto(String email, String password, String deviceId, String name) {
 		super();
 		this.email = email;
 		this.password = password;

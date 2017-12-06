@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.utcluj.track.dao.DeviceDao;
+import edu.utcluj.track.dto.DeviceDto;
 import edu.utcluj.track.exception.DeviceAlreadyRegisteredException;
 import edu.utcluj.track.exception.DeviceNotFoundException;
 import edu.utcluj.track.exception.NoMatchingException;
@@ -30,7 +30,7 @@ public class DeviceController {
 	//
 	@PostMapping
 	@PreAuthorize("permitAll()")
-	public ResponseEntity<?> create(@RequestBody DeviceDao deviceDao) {
+	public ResponseEntity<?> create(@RequestBody DeviceDto deviceDao) {
 		try {
 			this.deviceService.create(deviceDao);
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -40,7 +40,7 @@ public class DeviceController {
 	}
 
 	@PostMapping("/authentication")
-	public ResponseEntity<?> find(@RequestBody DeviceDao deviceDao) {
+	public ResponseEntity<?> find(@RequestBody DeviceDto deviceDao) {
 		try {
 			return new ResponseEntity<>(deviceService.find(deviceDao).getToken(), HttpStatus.OK);
 		} catch (DeviceNotFoundException | NoMatchingException | UserNotFoundException e) {

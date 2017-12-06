@@ -13,7 +13,7 @@
 		<button [disabled]="startdate == undefined || enddate == undefined" type="submit" class="btn btn-primary" (click)="onCheckPositions()">Check</button> 
 	</div>
 </div>
-<agm-map [latitude]="lat" [longitude]="lng">
+<agm-map>
 
 	<agm-marker *ngFor="let item of positions" [latitude]="item.latitude" [longitude]="item.longitude"></agm-marker>
 

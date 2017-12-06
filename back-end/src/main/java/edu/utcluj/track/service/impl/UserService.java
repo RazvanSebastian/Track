@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.utcluj.track.exception.UserAlreadyExistException;
 import edu.utcluj.track.model.Role;
@@ -15,6 +16,7 @@ import edu.utcluj.track.repository.IRoleRepository;
 import edu.utcluj.track.repository.IUserRepository;
 import edu.utcluj.track.service.IUserService;
 
+@Transactional
 @Component
 public class UserService implements IUserService {
 

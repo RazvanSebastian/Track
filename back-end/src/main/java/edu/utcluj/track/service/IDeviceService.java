@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import edu.utcluj.track.dao.DeviceDao;
+import edu.utcluj.track.dto.DeviceDto;
 import edu.utcluj.track.exception.DeviceAlreadyRegisteredException;
 import edu.utcluj.track.exception.DeviceNotFoundException;
 import edu.utcluj.track.exception.NoMatchingException;
@@ -25,7 +25,7 @@ public interface IDeviceService {
 	 * @throws NoMatchingException
 	 * @throws DeviceAlreadyRegisteredException
 	 */
-	public void create(DeviceDao deviceDao)
+	public void create(DeviceDto deviceDao)
 			throws DeviceAlreadyRegisteredException, UserNotFoundException, NoMatchingException;
 
 	/**
@@ -43,7 +43,7 @@ public interface IDeviceService {
 	 * @throws NoMatchingException
 	 * @throws UserNotFoundException
 	 */
-	public Device find(DeviceDao newDevice) throws DeviceNotFoundException, NoMatchingException, UserNotFoundException;
+	public Device find(DeviceDto newDevice) throws DeviceNotFoundException, NoMatchingException, UserNotFoundException;
 
 	/**
 	 * Find all devices associated with a user account
