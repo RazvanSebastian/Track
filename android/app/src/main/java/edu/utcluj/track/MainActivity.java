@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,7 +99,7 @@ public class MainActivity extends Activity {
      * @throws UnsupportedEncodingException
      */
     private void onLoginDevice() throws JSONException,UnsupportedEncodingException{
-        String url="https://track-school.herokuapp.com/device/authentication";
+        String url="http://192.168.43.77:8085/device/authentication";
         AsyncHttpClient client = new AsyncHttpClient();
 
         JSONObject jsonParams = new JSONObject();
@@ -140,7 +141,7 @@ public class MainActivity extends Activity {
      * @throws UnsupportedEncodingException
      */
     private void onRegisterNewDevice() throws JSONException,UnsupportedEncodingException {
-        String url="https://track-school.herokuapp.com/device";
+        String url="http://192.168.43.77:8085/device";
         AsyncHttpClient client = new AsyncHttpClient();
 
         JSONObject jsonParams = new JSONObject();
@@ -148,6 +149,8 @@ public class MainActivity extends Activity {
         jsonParams.put("password", passwordInput.getText());
         jsonParams.put("deviceToken",Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
         jsonParams.put("name", Build.MANUFACTURER + " - " + Build.MODEL);
+
+        Log.i("info : ",Build.MANUFACTURER + " - " + Build.MODEL);
         
         StringEntity entity = new StringEntity(jsonParams.toString());
 
@@ -178,7 +181,7 @@ public class MainActivity extends Activity {
      * @return true if the device is registered and the user has passed the login part
      */
     private void checkTokenStored() {
-        String url = "https://track-school.herokuapp.com/device";
+        String url = "http://192.168.43.77:8085/device";
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.addHeader("token", StoreManager.readToken(getApplicationContext()));

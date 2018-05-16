@@ -1,13 +1,19 @@
 package edu.utcluj.track;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,10 +36,13 @@ public class PositionActivity extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
 
+    boolean start = false;
+
     TextView latitudeText;
     TextView longitudeText;
     Button startTrackingButton;
     Button stopTrackingButton;
+    Runnable runnable;
 
     boolean isStart = false;
 
@@ -44,62 +53,71 @@ public class PositionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_position);
 
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         latitudeText = findViewById(R.id.latitudeTextView);
         longitudeText = findViewById(R.id.longitudeTextView);
         startTrackingButton = findViewById(R.id.startButton);
         stopTrackingButton = findViewById(R.id.stopButton);
 
-        locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
+        locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        final Runnable runnable = new Runnable() {
             @Override
-            public void onLocationChanged(Location location) {
-                latitudeText.setText(location.getLatitude()+"");
-                longitudeText.setText(location.getLongitude()+"");
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
+            public void run() {
+                while (start) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getLocation();
+                            try {
+                                onSavePosition();
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         };
 
         startTrackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
-                    try{
-                        onSavePosition();
-                    }catch (Exception e){}
-                }
-                catch (SecurityException e){
-                    Toast toast = Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                start = true;
+                AsyncTask.execute(runnable);
             }
         });
 
         stopTrackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                start = false;
             }
         });
     }
 
+    private void getLocation(){
+        GpsTracker gpsTracker = new GpsTracker(this);
+        if(gpsTracker.canGetLocation()){
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+            this.latitudeText.setText(String.valueOf(latitude));
+            this.longitudeText.setText(String.valueOf(longitude));
+            Log.i("Info#####:",latitude+" "+longitude);
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
+    }
+
     private void onSavePosition() throws JSONException,UnsupportedEncodingException {
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "https://track-school.herokuapp.com/position";
+        String url = "http://192.168.43.77:8085/position";
 
         JSONObject jsonParams = new JSONObject();
         jsonParams.put("createTime", System.currentTimeMillis());
