@@ -9,11 +9,15 @@
 				<th>Device name</th>
 				<th>Device token</th>
 				<th>Registration date</th>
+				<th>Positions</th>
+				<th>Delete</th>
 			</tr>
-			<tr style="cursor: pointer" *ngFor="let device of deviceList" (click)="viewPositionsDevice(device)">
+			<tr style="cursor: pointer" *ngFor="let device of deviceList">
 				<td>{{device.name}}</td>
 				<td>{{device.token}}</td>
 				<td>{{device.registrationDate | date : "M/d/yy, h:mm a"}}</td>
+				<td> <button type="submit" class="btn btn-primary" (click)="viewPositionsDevice(device)">Positions</button> </td>
+				<td> <button type="submit" class="btn btn-danger" (click)="onSubmitDelete(device.token)">Delete</button> </td>
 			</tr>
 
 		</table>

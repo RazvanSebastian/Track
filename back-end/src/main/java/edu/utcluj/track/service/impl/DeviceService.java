@@ -3,6 +3,7 @@ package edu.utcluj.track.service.impl;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,8 @@ public class DeviceService implements IDeviceService {
 			throw new DeviceAlreadyRegisteredException();
 
 		// We have registered the device
-		final Device device = deviceRepository
-				.save(new Device(deviceDao.getDeviceToken(),deviceDao.getName(), new Date(System.currentTimeMillis())));
+		final Device device = deviceRepository.save(
+				new Device(deviceDao.getDeviceToken(), deviceDao.getName(), new Date(System.currentTimeMillis())));
 		// Assigned the device to user and update
 		user.getDevices().add(device);
 		userRepository.save(user);
@@ -85,17 +86,37 @@ public class DeviceService implements IDeviceService {
 		final User user = userRepository.find(username);
 		if (user == null)
 			throw new UserNotFoundException();
-		return user.getDevices()
-				.stream()
-				.collect(Collectors.toList()) //get list of devices
-				.stream()
-				.map(p -> new DevicePojo(p.getToken(),p.getName(),p.getRegistrationDate()))
-				.collect(Collectors.toList());//get only the device without position
+		return user.getDevices().stream().collect(Collectors.toList()) // get list of devices
+				.stream().map(p -> new DevicePojo(p.getToken(), p.getName(), p.getRegistrationDate()))
+				.collect(Collectors.toList());// get only the device without position
 	}
 
 	@Override
 	public boolean find(String token) {
 		return deviceRepository.find(token) != null ? true : false;
+	}
+
+	@Override
+	public void delete(String email, String token) throws DeviceNotFoundException, UserNotFoundException {
+		final Device device = deviceRepository.find(token);
+		if (device == null)
+			throw new DeviceNotFoundException();
+
+		User user = userRepository.find(email);
+		if (user == null)
+			throw new UserNotFoundException();
+
+		Set<Device> devices = user.getDevices();
+		for (Device d : devices) {
+			if (d.getToken().equals(token)) {
+				devices.remove(d);
+				break;
+			}
+		}
+		user.setDevices(devices);
+		userRepository.save(user);
+
+		deviceRepository.delete(device);
 	}
 
 }

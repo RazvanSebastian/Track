@@ -34,4 +34,21 @@ export class TrackingComponent implements OnInit {
 		this._router.navigate(['/device-list/device/'+device.name+'/token/'+device.token]);
 	}
 
+	onSubmitDelete(token){
+		this._trackingService.deleteDevice(token).subscribe(
+			data => {
+				window.alert("Device delete successfully");
+				for (var i = this.deviceList.length - 1; i >= 0; i--) {
+					if(this.deviceList[i].token == token){
+						this.deviceList.splice(i,1);
+						break;
+					}
+				}
+			},
+			err => {
+				window.alert(err);
+			}
+			);
+	}
+
 }

@@ -58,4 +58,17 @@ export class TrackingService {
 		
 		return this._http.get(this.hostURI.adress+"/position",options);
 	}
+
+	deleteDevice(token){
+		let headers = new Headers();
+		headers.append("Authorization","Bearer "+localStorage.getItem("access_token"));
+
+		let params = new URLSearchParams();
+		params.set('user' , localStorage.getItem("username"));
+		params.set('token' , token);
+
+		let options = new RequestOptions({headers:headers,params:params});
+		
+		return this._http.delete(this.hostURI.adress+"/device",options);
+	}
 }

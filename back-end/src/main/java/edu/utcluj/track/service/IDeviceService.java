@@ -30,7 +30,7 @@ public interface IDeviceService {
 
 	/**
 	 * Used for login on android device. This method will check if the user is
-	 * registered and also if the device is already or not registered. 
+	 * registered and also if the device is already or not registered.
 	 * 
 	 * @note1 An android device can be register only one time for only one user!
 	 * @note2 One user can have multiple devices associate with his account!
@@ -55,10 +55,18 @@ public interface IDeviceService {
 	 * @throws UserNotFoundException
 	 */
 	public List<DevicePojo> findAll(String username) throws UserNotFoundException;
-	
+
 	/**
 	 * @param token
-	 * @return true if the device with @token is registered 
+	 * @return true if the device with @token is registered
 	 */
 	public boolean find(String token);
+
+	/**
+	 * Delete user device by device id
+	 * 
+	 * @param id
+	 * @throws UserNotFoundException
+	 */
+	public void delete(String email, String token) throws DeviceNotFoundException, UserNotFoundException;
 }

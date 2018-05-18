@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.utcluj.track.dto.DeviceDto;
@@ -31,6 +33,7 @@ public class DeviceController {
 	@PostMapping
 	@PreAuthorize("permitAll()")
 	public ResponseEntity<?> create(@RequestBody DeviceDto deviceDao) {
+		System.out.println(deviceDao.toString());
 		try {
 			this.deviceService.create(deviceDao);
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -52,6 +55,16 @@ public class DeviceController {
 	public ResponseEntity<?> checkToken(@RequestHeader("token") String token) {
 		return deviceService.find(token) ? new ResponseEntity<>(HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
+
+	@DeleteMapping
+	public ResponseEntity<?> delete(@RequestParam("user") String user, @RequestParam("token") String token) {
+		try {
+			deviceService.delete(user, token);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (DeviceNotFoundException | UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+		}
 	}
 
 	//
